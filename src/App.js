@@ -24,9 +24,9 @@ import NuevoProducto from './components/productos/NuevoProducto';
 /**Componentes para Pedidos */
 import Pedidos from './components/pedidos/Pedidos';
 import NuevoPedido from './components/pedidos/NuevoPedido';
+import Login from './components/auth/Login';
 
-
-
+import './scss/modules/sections.scss';
 
 
 function App() {
@@ -53,6 +53,7 @@ function App() {
 
                     <Route exact path="/pedidos" component={Pedidos} />
                     <Route exact path="/pedidos/nuevo/:id" component={NuevoPedido} />
+                    <Route exact path="/iniciar-sesion" component={Login}/>
                 </Switch>
             </main>
 
