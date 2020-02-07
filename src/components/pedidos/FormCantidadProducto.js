@@ -1,6 +1,6 @@
 import React from 'react';
 
-function CantidadProducto(props) {
+function FormCantidadProducto(props) {
 
    const {
         producto,
@@ -44,4 +44,4 @@ function CantidadProducto(props) {
     );
 }
 
-export default CantidadProducto;
+export default FormCantidadProducto;

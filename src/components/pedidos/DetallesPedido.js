@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function DetallesPeido({pedido}) {
 
@@ -25,10 +26,11 @@ function DetallesPeido({pedido}) {
                         <p className="total">Total: {pedido.total} </p>
                     </div>
                     <div className="acciones">
-                        <a href="#" className="btn btn-azul">
+                    
+                        <Link to={`/pedido/editar/${cliente._id}`} className="btn btn-azul">
                             <i className="fas fa-pen-alt"></i>
-                            Editar Pedido
-                        </a>
+                                 Editar Pedido
+                        </Link>
 
                         <button type="button" className="btn btn-rojo btn-eliminar">
                             <i className="fas fa-times"></i>

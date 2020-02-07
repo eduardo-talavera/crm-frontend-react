@@ -53,7 +53,7 @@ function App() {
 
                     <Route exact path="/pedidos" component={Pedidos} />
                     <Route exact path="/pedidos/nuevo/:id" component={NuevoPedido} />
-                    <Route exact path="/iniciar-sesion" component={Login}/>
+                    <Route exact path="/iniciar-sesion" component={Login} />
                 </Switch>
             </main>
 

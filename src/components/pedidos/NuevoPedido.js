@@ -27,11 +27,9 @@ function NuevoPedido(props) {
         };
 
         // llamar api
-        consultarAPI();
-
-        // mandamos llamar a la funcion para actualizar el total
-        actualizarTotal();
-    },[productos,total,id]);
+         consultarAPI();
+       
+    },[productos,id], () => actualizarTotal());
 
 
 
