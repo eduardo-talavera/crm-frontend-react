@@ -1,34 +1,69 @@
-import React, { useEffect,useState,Fragment } from 'react';
+import React, { useEffect, useState, useContext, Fragment } from 'react';
 
 // importar  cliente  Axios 
 import clienteAxios from '../../config/axios';
 
 import Cliente from './Cliente';
 
-import { Link } from 'react-router-dom';
+import { Link, withRouter} from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 
+// importar el context
+import { CRMContext } from '../../context/CRMContext';
+
+
 // hecho con hooks
-function Clientes() {
+function Clientes(props) {
 
     // trabajar con el state
     // clientes = state, guardarClientes = funcion para guardar el state
     const [clientes, guardarClientes] = useState([]);
 
+    // utilizar valores del context
+    const [auth, guardarAuth] = useContext(CRMContext);
+   
 
     // Use Efect es igual a componentDidMount y willMount
     useEffect( () => {
+
+         if (auth.token !== '') {
+            
          // Query a la API
         const consultarApi = async () => {
-                const clientesConsulta = await clienteAxios.get('/clientes');
-                // Colocar el resultado en el state
-                guardarClientes(clientesConsulta.data);
-             }
+              
+         try {
+
+            // Axios soporta headers
+            const clientesConsulta = await clienteAxios.get('/clientes',{
+                  headers: {
+                     Authorization : `Bearer ${auth.token}` // aqui se pasa el jwt
+                  }
+            });
+            // Colocar el resultado en el state
+            guardarClientes(clientesConsulta.data);
+            
+         } catch (error) {
+            // error con autorizacion
+            if(error.response.status == 500) {
+               props.history.push('/iniciar-sesion');
+            }
+         }
+
+      }
+
+             consultarApi();
              
-        consultarApi();
+      } else{
+         props.history.push('/iniciar-sesion');
+      }
 
     }, [clientes]);// consulta la api cuando el state de clientes cambia
 
+
+    // si el state esta como false
+    if(!auth.auth) {
+       props.history.push('iniciar-sesion');
+    }
 
      // Spinner de carga
      if(!clientes.length) return <Spinner/>
@@ -57,4 +92,4 @@ function Clientes() {
     );
 }
 
-export default Clientes;
+export default withRouter(Clientes);
