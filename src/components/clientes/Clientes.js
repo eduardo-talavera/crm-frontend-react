@@ -44,7 +44,7 @@ function Clientes(props) {
             
          } catch (error) {
             // error con autorizacion
-            if(error.response.status == 500) {
+            if(error.response.status = 500) {
                props.history.push('/iniciar-sesion');
             }
          }
