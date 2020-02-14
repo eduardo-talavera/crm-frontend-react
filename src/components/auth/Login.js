@@ -48,14 +48,22 @@ function Login(props){
 
         } catch (error) {
 
-            console.log(error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Hubo un error',
-                text: error.response.data.mensaje
-             })
-            
-        }
+                // si es un error de express
+            if (error.response) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Hubo un error',
+                    text: error.response.data.mensaje
+                 })
+
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Hubo un error',
+                    text: 'Hubo un error'
+                 })
+            }    
+         }
     }
 
     // Asignando lo que el usuario escribe en el state
@@ -94,7 +102,7 @@ function Login(props){
                         onChange={leerDatos}
                       />
                 </div>  
-                <input type="submit" value="Iniciar Iesión" className="btn btn-verde btn-block"/>
+                <input type="submit" value="Iniciar Sesión" className="btn btn-verde btn-block"/>
                </form>
            </div>
        </div>

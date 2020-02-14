@@ -32,8 +32,12 @@ import './scss/modules/sections.scss';
 
 function App() {
 
+  
+
   // utilizar context en el componente para pasarlo a cualquier componente sin pasarlo por props
   const [auth, guardarAuth] = useContext(CRMContext);
+
+
 
   return(
     <Router>

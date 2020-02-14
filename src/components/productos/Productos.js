@@ -29,12 +29,14 @@ function Productos(props) {
 
                 const productosConsulta = await clienteAxios.get('/productos', {
                     headers: {
-                        Authorization: `Barer ${auth.token}`
+                        Authorization: `Bearer ${auth.token}`
                     }
                 });
 
                    // set al state
-                 guardarProductos(productosConsulta.data);
+                guardarProductos(productosConsulta.data);
+                
+               
 
            } catch (error) {
                if (error.response.status = 500) {
@@ -43,8 +45,8 @@ function Productos(props) {
            }
         }
 
-        // llamado a la API
-        consultarAPI();
+             // llamado a la API
+             consultarAPI();
 
        }else{
            props.history.push('/iniciar-sesion');

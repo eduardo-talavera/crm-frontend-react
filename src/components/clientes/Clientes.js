@@ -26,8 +26,11 @@ function Clientes(props) {
     // Use Efect es igual a componentDidMount y willMount
     useEffect( () => {
 
+         
+
          if (auth.token !== '') {
-            
+
+          
          // Query a la API
         const consultarApi = async () => {
               

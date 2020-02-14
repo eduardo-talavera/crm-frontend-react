@@ -1,8 +1,12 @@
-import React, {useEffect, useState, Fragment} from 'react';
+import React, {useEffect, useState, useContext, Fragment} from 'react';
 import Swal from 'sweetalert2';
 import clienteAxios  from '../../config/axios';
 import { withRouter }  from 'react-router-dom';
 import Spinner from '../layout/Spinner'
+
+// importar el context
+import { CRMContext } from '../../context/CRMContext';
+
 
 function EditarProducto(props) {
 
@@ -17,6 +21,10 @@ function EditarProducto(props) {
 
       //state para la imagen 
       const [archivo, guardarArchivo] = useState('');
+
+       // utilizar valores del context
+     const [auth, guardarAuth] = useContext(CRMContext);
+
 
     
     // edita un producto en la BD
@@ -69,14 +77,34 @@ function EditarProducto(props) {
     
     // useEffect cuando el componente carga
     useEffect( () => {
-     // consultar la API para traer el producto a editar
-       const consultarAPI = async () => {
-            const productoConsulta = await clienteAxios.get(`/productos/${id}`);
-            guardarProducto(productoConsulta.data);
+        if(auth.token !== '') {
+            try {
+                // consultar la API para traer el producto a editar
+                const consultarAPI = async () => {
+                    const productoConsulta = await clienteAxios.get(`/productos/${id}`,{
+                        headers: {
+                            Authorization: `Barer ${auth.token}`
+                        }
+                    });
+                    guardarProducto(productoConsulta.data);
+                }
+
+                consultarAPI();
+
+            } catch (error) {
+                
+            }
+        } else{
+            props.history.push('/iniciar-sesion');
         }
 
-        consultarAPI();
     }, [id]);
+
+      // si el state esta como false
+      if (!auth.auth) {
+        props.history.push('/iniciar-sesion');
+    }
+
 
 
 
@@ -138,7 +166,7 @@ function EditarProducto(props) {
             <div className="campo">
                 <label>Imagen:</label>
                 { imagen ? (
-                    <img src={`http://localhost:7000/${imagen}`} alt="imagen"
+                    <img src={`${process.env.REACT_APP_BACKEND_URL}/${imagen}`} alt="imagen"
                      width="300" />
                 ) : null }
 

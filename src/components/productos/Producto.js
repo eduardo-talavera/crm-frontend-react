@@ -41,7 +41,7 @@ function Producto({producto}) {
             <p className="nombre">{nombre}</p>
                 <p className="precio">$ {precio}</p>
                 {imagen ? (
-                    <img src={`http://localhost:7000/${imagen}`} alt="imagen" />
+                    <img src={`${process.env.REACT_APP_BACKEND_URL}/${imagen}`} alt="imagen" />
                 ) : null }
             </div>
             <div className="acciones">
