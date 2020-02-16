@@ -1,9 +1,16 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import {Link} from 'react-router-dom';
 import Swal from 'sweetalert2';
 import clienteAxios from '../../config/axios';
+// importar el context
+import { CRMContext } from '../../context/CRMContext';
+
 
 function Producto({producto}) {
+
+     // utilizar valores del context
+     const [auth, guardarAuth] = useContext(CRMContext);
+
 
     // elimina un  produto
     const eliminarProducto = id => {
@@ -19,7 +26,11 @@ function Producto({producto}) {
           }).then((result) => {
             if (result.value) {
                 // eliminar en la rest API
-                clienteAxios.delete(`/productos/${id}`)
+                clienteAxios.delete(`/productos/${id}`,{
+                    headers: {
+                        Authorization: `Bearer ${auth.token}`
+                    }
+                })
                     .then(res => {
                         if (res.status === 200) {
                             Swal.fire(

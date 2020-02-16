@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
 
 function FormBuscarProducto(props) {
+
+    
+
+
     return(
         <form
             onSubmit={props.buscarProducto}

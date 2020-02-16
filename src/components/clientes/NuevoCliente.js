@@ -36,7 +36,11 @@ function  NuevoCliente({history}) {
         e.preventDefault();
 
         // enviar peticion a axios
-        clienteAxios.post('/clientes', cliente)
+        clienteAxios.post('/clientes', cliente,{
+            headers:{
+                Authorization: `Barer ${auth.token}`
+            }
+        })
             .then(res => {
                 // Validar si hay errores de mongo
                 if (res.data.code === 11000) {

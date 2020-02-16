@@ -1,10 +1,15 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState,useContext, Fragment } from "react";
 import clienteAxios from "../../config/axios";
 import Swal from "sweetalert2";
 import { withRouter } from 'react-router-dom';
 
+// importar el context
+import { CRMContext } from '../../context/CRMContext';
+
 import FormBuscarProducto from "./FormBuscarProducto";
 import FormCantidadProducto from "./FormCantidadProducto";
+
+
 
 function NuevoPedido(props) {
     // Extraer el ID del cliente
@@ -16,20 +21,46 @@ function NuevoPedido(props) {
     const [productos, guardarProductos] = useState([]);
     const [total, guardarTotal] = useState(0);
 
+       // utilizar valores del context
+     const [auth, guardarAuth] = useContext(CRMContext);
+
+
 
 
     useEffect(() => {
-        // Obtener el cliente
-        const consultarAPI = async () => {
-            // consultar el cliente actual
-            const resultado = await clienteAxios.get(`/clientes/${id}`);
-            guardarCliente(resultado.data);
-        };
+        if (auth.token !== '') {
+            try {
 
-        // llamar api
-         consultarAPI();
+                // Obtener el cliente
+           const consultarAPI = async () => {
+               // consultar el cliente actual
+               const resultado = await clienteAxios.get(`/clientes/${id}`,{
+                   headers: {
+                       Authorization: `Barer ${auth.token}`
+                   }
+               });
+               guardarCliente(resultado.data);
+           };
+   
+           // llamar api
+            consultarAPI();
+              
+          } catch (error) {
+              if (error.response.status = 500) {
+                  props.history.push('/iniciar-sesion');
+              }
+          }
+        }else {
+            props.history.push('/iniciar-sesion');
+        }
+
+         actualizarTotal();
        
-    },[productos,id], () => actualizarTotal());
+    },[productos,id]);
+
+    if (!auth.auth) {
+        props.history.push('/iniciar-sesion');
+    }
 
 
 
@@ -37,9 +68,9 @@ function NuevoPedido(props) {
         e.preventDefault();
 
         // Obtener los productos de la busqueda
-        const resultadoBusqueda = await clienteAxios.post(
-            `/productos/busqueda/${busqueda}`
-        );
+        const resultadoBusqueda = await clienteAxios.post(`/productos/busqueda/${busqueda}`);
+
+
 
         // si no hay resultados alerta contrario agregar al state
         if (resultadoBusqueda.data[0]) {
@@ -144,7 +175,11 @@ function NuevoPedido(props) {
         }
 
        // Almacenar en la BD
-       const resultado = await clienteAxios.post(`pedidos/nuevo/${id}`,pedido);
+       const resultado = await clienteAxios.post(`pedidos/nuevo/${id}`,pedido,{
+           headers: {
+               Authorization: `Barer ${auth.token}`
+           }
+       });
 
        // Leer resultado
        if (resultado.status === 200) {
@@ -168,7 +203,7 @@ function NuevoPedido(props) {
        props.history.push('/pedidos');
     }
 
-
+    let e;
 
     return (
         <Fragment>
@@ -185,7 +220,7 @@ function NuevoPedido(props) {
             <FormBuscarProducto
                 buscarProducto={buscarProducto}
                 leerDatosBusqueda={leerDatosBusqueda}
-            />
+                />
 
             <ul className="resumen">
                 {productos.map((producto, index) => (

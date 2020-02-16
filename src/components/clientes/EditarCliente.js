@@ -1,11 +1,16 @@
-import React, {Fragment,useState, useEffect} from 'react';
+import React, {Fragment,useState,useContext, useEffect} from 'react';
 import Swal from 'sweetalert2';
 import {withRouter} from 'react-router-dom';
 import clienteAxios from '../../config/axios';
 
-
+// importar el context
+import { CRMContext } from '../../context/CRMContext';
 
 function  EditarCliente(props) {
+
+     // utilizar valores del context
+     const [auth, guardarAuth] = useContext(CRMContext);
+
 
     // cliente = state
     // guardarCliente = funcion para guardar el state 
@@ -27,7 +32,11 @@ function  EditarCliente(props) {
 
            //  Query a la API
                const consultarAPI = async () => {
-               const clienteConsulta = await clienteAxios.get(`/clientes/${id}`);
+               const clienteConsulta = await clienteAxios.get(`/clientes/${id}`,{
+                   headers:{
+                       Authorization: `Barer ${auth.token}`
+                   }
+               });
     
             // colocar en el state 
                datosCliente(clienteConsulta.data);
@@ -52,7 +61,11 @@ function  EditarCliente(props) {
         e.preventDefault();
 
         // Enviar peticion por axios
-        clienteAxios.put(`/clientes/${cliente._id}`, cliente)
+        clienteAxios.put(`/clientes/${cliente._id}`, cliente,{
+            headers:{
+                Authorization: `Barer ${auth.token}`
+            }
+        })
             .then(res => {
                 // Validar si hay errores de mongo
                 if (res.data.code === 11000) {
