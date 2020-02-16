@@ -56,7 +56,7 @@ function NuevoPedido(props) {
 
          actualizarTotal();
        
-    },[productos,id]);
+    },[productos,id,total]);
 
     if (!auth.auth) {
         props.history.push('/iniciar-sesion');
