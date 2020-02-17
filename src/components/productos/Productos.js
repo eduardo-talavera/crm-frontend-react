@@ -13,6 +13,7 @@ import { CRMContext } from '../../context/CRMContext';
 
 function Productos(props) {
 
+
     // inicializamos el state con un arreglo vacio y su seter
     const [productos, guardarProductos] = useState([]);
 
