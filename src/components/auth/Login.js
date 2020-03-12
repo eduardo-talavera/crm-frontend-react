@@ -60,7 +60,8 @@ function Login(props){
                 Swal.fire({
                     icon: 'error',
                     title: 'Hubo un error',
-                    text: 'Hubo un error'
+                    // text: 'Hubo un error'
+                    text: error.response.data
                  })
             }    
          }
