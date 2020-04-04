@@ -62,7 +62,16 @@ function Productos(props) {
     }
 
     // Spinner de carga
-    if(!productos.length) return <Spinner />
+    if(!productos.length) return (
+        <Fragment>
+            <h2>Productos</h2>
+            <Link to={"/productos/nuevo"} className="btn btn-verde nvo-cliente"> <i className="fas fa-plus-circle"></i>
+                Nuevo Producto
+            </Link>
+            {/* Spinner de carga */}
+            <Spinner />
+        </Fragment>
+    );
         
   
 

@@ -24,7 +24,7 @@ function FormBuscarProducto(props) {
 
             <input
                 type="submit"
-                className="btn btn-azul btn-block"
+                className="btn btn-azul"
                 value="Buscar Producto"
                 />
         </form>    
