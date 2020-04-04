@@ -44,7 +44,7 @@ function App() {
         <Fragment>
           <CRMProvider value={[auth, guardarAuth]}>
             <Header/>
-        <div className="gri contenedor contenido-principal">
+        <div className="grid contenedor contenido-principal">
 
             <Navegacion/>
 
