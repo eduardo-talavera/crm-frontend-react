@@ -41,10 +41,10 @@ function NuevoProducto(props) {
         try {
            const res = await clienteAxios.post('/productos', formData, {
                 headers: {
-                    'Content-Type' : 'multipart/form-data',
-                    Authorization: `Bearer ${auth.token}`
+                    Authorization: `Bearer ${auth.token}`,
+                    'Content-Type' : 'multipart/form-data'
                 }
-            });
+            } );
 
             // lanzar una alerta
             if(res.status === 200) {
