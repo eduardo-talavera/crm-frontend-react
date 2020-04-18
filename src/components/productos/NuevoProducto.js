@@ -3,8 +3,7 @@ import Swal from 'sweetalert2';
 import clienteAxios  from '../../config/axios';
 import { withRouter }  from 'react-router-dom';
 
-// importar el context
-import { CRMContext } from '../../context/CRMContext';
+
 
 function NuevoProducto(props) {
 
@@ -19,9 +18,6 @@ function NuevoProducto(props) {
 
     //state para la imagen 
     const [archivo, guardarArchivo] = useState('');
-
-     // utilizar valores del context
-    const [auth, guardarAuth] = useContext(CRMContext);
 
 
 
@@ -42,7 +38,6 @@ function NuevoProducto(props) {
            const res = await clienteAxios.post('/productos', formData, {
                 headers: {
                     'Content-Type' : 'multipart/form-data',
-                    Authorization: `Bearer ${auth.token}`
                 }
             } );
 
