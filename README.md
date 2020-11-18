@@ -1,4 +1,4 @@
-# CRM Frontend
+# CRM Frontend React
 
 ## Requerimientos 📄
 - Node >= 12.8
