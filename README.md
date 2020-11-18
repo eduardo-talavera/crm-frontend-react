@@ -1,6 +1,6 @@
 # CRM Frontend React
 
-## Requerimientos 📄
+## Requerimientos Minimos📄
 - Node >= 12.8
 - Editor de codigo
 
