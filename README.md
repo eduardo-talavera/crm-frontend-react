@@ -28,6 +28,6 @@ configuración por defecto:
 ```
 
 
-para clonar o descargar el backend visite la siguiente haga click en el siguiente enlace
+para clonar o descargar el backend haga click en el siguiente enlace
 <br>
 <a href="https://github.com/eduardo-talavera-dev/crm-backend-express">CRM Backend Express</a>
