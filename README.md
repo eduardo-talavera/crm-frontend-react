@@ -6,11 +6,11 @@
 
 
 ## Instalación 📦
-- abrir una terminal o consola de comandos
+- Abrir una terminal o consola de comandos
 - Clonar o descargar el repositorio
-- entar al proyecto con `cd crm-frontend-react`
+- Entar al proyecto con `cd crm-frontend-react`
 - Despues instalar las dependencias ejecutando el comando `npm install`
-- configurar el archivo ".env.development" de acuerdo a las necesidades del proyecto si se desea ejecutar en un entorno de produccion cambiar ".env.development" por ".env.production"
+- Configurar el archivo ".env.development" de acuerdo a las necesidades del proyecto si se desea ejecutar en un entorno de produccion cambiar ".env.development" por ".env.production"
 
 
 ## Ejecución 🧪
@@ -22,7 +22,7 @@ El archivo debe contener la siguiente variable que apunta a la parte backend, es
 
 - REACT_APP_BACKEND_URL
 
-configuración por defecto:
+Configuración por defecto:
 
 ```env
 
@@ -30,6 +30,6 @@ configuración por defecto:
 ```
 
 
-para clonar o descargar el backend haga click en el siguiente enlace
+Para clonar o descargar el backend haga click en el siguiente enlace
 <br>
 <a href="https://github.com/eduardo-talavera-dev/crm-backend-express">CRM Backend Express</a>
