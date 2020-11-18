@@ -1,6 +1,7 @@
 :root {
     --fontTexto:  'Raleway', sans-serif;
-    --fontHeading: 'Staatliches', cursive;
+    /* --fontHeading: 'Staatliches', cursive; */
+    --fontHeading: 'Staatliches', sans-serif;
 
     /** Colores **/
     --azul : #00487C;
@@ -64,6 +65,8 @@ h2 {
     border: none;
     flex: 0 0 100%;
     width: 100%;
+    border-radius: 13px;
+    outline: none;
 }
 .btn:hover {
     cursor: pointer;
@@ -120,7 +123,7 @@ h2 {
 }
 .barra {
     background-color: var(--azul);
-    padding: 2rem 0;
+    padding: 1rem 0;
 }
 .barra h1 {
     margin:0;
@@ -341,6 +344,9 @@ form .campo label {
     font-family: var(--fontTexto);
     flex: 0 0 100px;
 }
+form .campo input {
+    outline: none;
+}
 form .campo input:not([type="submit"]){
     padding: 1.5rem;
     flex: 1;
@@ -448,6 +454,38 @@ h3.resumen-titulo {
 .login h2 {
     text-align: center;
 }
-.login .contenedor-formulario {
+/* .login .contenedor-formulario {
 
+} */
+.item__image_product{
+    width: 300px;
+}
+
+.item__image_product img {
+    width: 100%;
+}
+
+.link__register_container{
+    width: 100%;
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.link__register_container .link__register {
+    color: var(--grisOscuro);
+    font-size: 20px;
+}
+
+.info-producto .precio {
+    font-size: 20px;
+}
+
+@media (max-width: 475px) {
+    .item__image_product{
+        width: 200px;
+        margin: auto;
+    }
 }

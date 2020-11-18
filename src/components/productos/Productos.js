@@ -40,7 +40,7 @@ function Productos(props) {
                
 
            } catch (error) {
-               if (error.response.status = 500) {
+               if (error.response.status === 500) {
                    props.history.push('/iniciar-sesion');
                }
            }

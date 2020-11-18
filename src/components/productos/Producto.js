@@ -1,6 +1,7 @@
 import React,{useContext} from 'react';
 import {Link} from 'react-router-dom';
 import Swal from 'sweetalert2';
+import CurrencyFormat from 'react-currency-format';
 import clienteAxios from '../../config/axios';
 // importar el context
 import { CRMContext } from '../../context/CRMContext';
@@ -31,15 +32,25 @@ function Producto({producto}) {
                         Authorization: `Bearer ${auth.token}`
                     }
                 })
-                    .then(res => {
+                .then(res => {
+
                         if (res.status === 200) {
-                            Swal.fire(
-                                'Eliminado!',
-                                 res.data.mensaje,
-                                'success'
-                              )
-                        }
-                    })
+                           if (res.data.type === 'success') {
+                                Swal.fire(
+                                    'Eliminado!',
+                                    res.data.mensaje,
+                                    'success'
+                                );
+                           }
+                           if(res.data.type === 'warning'){
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'No se puede realizar esta operacón',
+                                text:  res.data.mensaje,
+                             });
+                            }
+                        } 
+                })
             }
           })
     }
@@ -50,9 +61,10 @@ function Producto({producto}) {
         <li className="producto">
             <div className="info-producto">
             <p className="nombre">{nombre}</p>
-                <p className="precio">$ {precio}</p>
+            <CurrencyFormat value={precio} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={value => <p className="precio">{value}</p>} />
+                {/* <p className="precio">{precio}</p> */}
                 {imagen ? (
-                    <img src={`${process.env.REACT_APP_BACKEND_URL}/${imagen}`} alt="imagen" />
+                    <div className="item__image_product"><img src={`${process.env.REACT_APP_BACKEND_URL}/${imagen}`} alt="imagen" /></div>
                 ) : null }
             </div>
             <div className="acciones">

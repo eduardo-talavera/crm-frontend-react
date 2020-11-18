@@ -5,49 +5,40 @@ import { withRouter } from 'react-router-dom';
 import  clienteAxios from '../../config/axios';
 
 // context
-import  { CRMContext } from '../../context/CRMContext';
+// import  { CRMContext } from '../../context/CRMContext';
 
-function Login(props){
+function SignUp(props){
 
     // Auth y token
-    const [auth, guardarAuth] = useContext(CRMContext);
+    // const [auth, guardarAuth] = useContext(CRMContext);
    
 
     // State con los datos del formulario
-    const [credenciales, guardarCredenciales] = useState({});
+    const [usuario, guardarUsuario] = useState({});
 
   
 
     // Inicia sesion en el servidor
-    const iniciarSesion = async e => {
+    const registrarUsuario = async e => {
 
         e.preventDefault(); // cancelamos que el el componente se recargue 
         // Autenticar el usuario
         try {
 
-            const respuesta = await clienteAxios.post('/iniciar-sesion', credenciales);
-            
-            // extraeyendo el token y colocandolo en local storage
-            const { token } = respuesta.data;
-            localStorage.setItem('token', token);
+            const res = await clienteAxios.post('/crear-cuenta', usuario);
 
-            // colocarlo en el state
-            guardarAuth({
-                token,
-                auth: true
-            })
-
-            if(respuesta.status === 200 ){
-                  // alerta de exito
+              // lanzar una alerta
+              if(res.status === 200) {
                 Swal.fire(
-                    'Login Correcto',
-                    'Has iniciado sesion',
+                    'Usuario Registrado correctamente',
+                    res.data.mensaje,
                     'success'
-                );
+                )
             }
+            
 
             // redireccionar
-            props.history.push('/')
+            props.history.push('/iniciar-sesion');
 
         } catch (error) {
 
@@ -63,7 +54,6 @@ function Login(props){
                 Swal.fire({
                     icon: 'error',
                     title: 'Hubo un error',
-                    // text: 'Hubo un error'
                     text: error.response.data
                  })
             }    
@@ -72,19 +62,20 @@ function Login(props){
 
     // Asignando lo que el usuario escribe en el state
     const leerDatos = e => {
-        guardarCredenciales({
-            ...credenciales,
+        guardarUsuario({
+            ...usuario,
             [e.target.name] : e.target.value
         })
     }
 
     return(
        <div className="login">
-           <h2>Log in</h2>
+           <h2>Registro</h2>
+           <p style={{textAlign:'center', color: 'gray'}}>La opción de registro ha sido habilitada solo para efectos de prueba dado que esta es solo una versión para demostración</p>
 
            <div className="contenedor-formulario">
                <form
-                    onSubmit={iniciarSesion}
+                    onSubmit={registrarUsuario}
                >
                  <div className="campo">
                      <label>Correo</label>
@@ -97,6 +88,16 @@ function Login(props){
                       />
                 </div>  
                 <div className="campo">
+                     <label>Nombre</label>
+                     <input
+                        type="text"
+                        name="nombre"
+                        placeholder="Email para iniciar sesion"
+                        required
+                        onChange={leerDatos}
+                      />
+                </div> 
+                <div className="campo">
                      <label>Contraseña</label>
                      <input
                         type="password"
@@ -106,15 +107,15 @@ function Login(props){
                         onChange={leerDatos}
                       />
                 </div>  
-                <input type="submit" value="Iniciar sesión" className="btn btn-verde btn-block"/>
+                <input type="submit" value="Registrarme" className="btn btn-verde btn-block"/>
                </form>
            </div>
            <div className="link__register_container">
-                <Link to={"/registro"} className="link__register">Registrarme</Link>
+                <Link to={"/iniciar-sesion"} className="link__register">Iniciar Sesión</Link>
             </div>
        </div>
     )
 }
 
 
-export default withRouter(Login);
+export default withRouter(SignUp);

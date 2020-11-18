@@ -92,6 +92,12 @@ function  EditarCliente(props) {
     }
 
    
+    const isPhoneNumber = (phone) => { 
+ 
+        const regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/; 
+        if(phone.match(regex)) return true; 
+        else return false; 
+    }
 
 
     // Validar el formulario
@@ -104,7 +110,8 @@ function  EditarCliente(props) {
                      !apellido.length ||
                      !email.length ||
                      !empresa.length ||
-                     !telefono.length;
+                     !telefono.length ||
+                     !isPhoneNumber(telefono);
 
         // retorna true o false
         return valido;

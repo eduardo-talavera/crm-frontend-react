@@ -24,10 +24,11 @@ import NuevoProducto from './components/productos/NuevoProducto';
 /**Componentes para Pedidos */
 import Pedidos from './components/pedidos/Pedidos';
 import NuevoPedido from './components/pedidos/NuevoPedido';
+import EditarPedido from './components/pedidos/EditarPedido';
 import Login from './components/auth/Login';
+import SignUp from './components/auth/SignUp';
 import { CRMContext, CRMProvider } from './context/CRMContext';
 
-import './scss/modules/sections.scss';
 
 
 function App() {
@@ -61,9 +62,13 @@ function App() {
                     <Route exact path="/productos/nuevo" component={NuevoProducto} />
                     <Route exact path="/productos/editar/:id" component={EditarProducto} />
 
+                      {/**Rutas para pedidos */}
                     <Route exact path="/pedidos" component={Pedidos} />
                     <Route exact path="/pedidos/nuevo/:id" component={NuevoPedido} />
+                    {/* <Route exact path="/pedido/editar/:idPedido" component={EditarPedido} /> */}
+
                     <Route exact path="/iniciar-sesion" component={Login} />
+                    <Route exact path="/registro" component={SignUp} />
                 </Switch>
             </main>
            </div>

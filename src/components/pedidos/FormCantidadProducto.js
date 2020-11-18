@@ -1,4 +1,5 @@
 import React from 'react';
+import CurrencyFormat from 'react-currency-format';
 
 function FormCantidadProducto(props) {
 
@@ -13,8 +14,14 @@ function FormCantidadProducto(props) {
     return(
         <li>
             <div className="texto-producto">
-                    <p className="nombre">{producto.nombre}</p>
-                    <p className="precio">{producto.precio}</p>
+                    <p className="nombre">{producto.nombre || producto.producto.nombre}</p>
+                    <CurrencyFormat
+                        value={producto.precio || producto.producto.precio}
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        prefix={'$'}
+                        renderText={value => <p className="precio">Precio unitario: {value}</p>}
+                    />
             </div>
             <div className="acciones">
                 <div className="contenedor-cantidad">
@@ -34,7 +41,7 @@ function FormCantidadProducto(props) {
                 <button 
                     type="button"
                     className="btn btn-rojo"
-                    onClick={() => eliminarProductoPedido(producto.producto)}
+                    onClick={() => eliminarProductoPedido(producto._id)}
                 >
                         <i className="fas fa-minus-circle"></i>
                             Eliminar Producto

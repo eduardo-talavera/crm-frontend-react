@@ -12,9 +12,10 @@ import FormCantidadProducto from "./FormCantidadProducto";
 
 
 
-function NuevoPedido(props) {
-    // Extraer el ID del cliente
-    const { id } = props.match.params;
+function EditarPedido(props) {
+    // Extraer el ID del pedido
+    const { idPedido } = props.match.params;
+  
 
     // State
     const [cliente, guardarCliente] = useState({});
@@ -29,23 +30,27 @@ function NuevoPedido(props) {
 
 
     useEffect(() => {
+        const ac = new AbortController();
         if (auth.token !== '') {
-            try {
+          try {
 
-                // Obtener el cliente
-           const consultarAPI = async () => {
-               // consultar el cliente actual
-               const resultado = await clienteAxios.get(`/clientes/${id}`,{
-                   headers: {
-                       Authorization: `Barer ${auth.token}`
-                   }
-               });
-               guardarCliente(resultado.data);
-           };
-   
-           // llamar api
-            consultarAPI();
-              
+              // Obtener el pedido
+              const consultarAPI = async () => {
+                  // consultar el cliente actual
+                  const resultado = await clienteAxios.get(`/pedidos/${idPedido}`,{
+                      headers: {
+                          Authorization: `Barer ${auth.token}`
+                      }
+                  });
+                    // setear el state inicial
+                  guardarCliente(resultado.data.cliente);
+                  guardarProductos(resultado.data.pedido);
+              };
+      
+              // llamar api
+                consultarAPI();
+                actualizarTotal();
+
           } catch (error) {
               if (error.response.status = 500) {
                   props.history.push('/iniciar-sesion');
@@ -56,8 +61,10 @@ function NuevoPedido(props) {
         }
 
          actualizarTotal();
+
+         return () => ac.abort(); // Abort both fetches on unmount
        
-    },[productos,cliente,id,total]);
+    },[]);
 
 
     if (!auth.auth) {
@@ -82,7 +89,6 @@ function NuevoPedido(props) {
             productoResultado.producto = resultadoBusqueda.data[0]._id;
             productoResultado.cantidad = 1;
 
-
             if (productos.length) {
                 found = productos.find(producto => producto.producto === productoResultado.producto );
             }
@@ -90,6 +96,7 @@ function NuevoPedido(props) {
             if (!found) {
                 // setear el state
                 guardarProductos([...productos, productoResultado]);
+                actualizarTotal();
             }
         } else {
             // no hay resultados
@@ -123,6 +130,7 @@ function NuevoPedido(props) {
 
         // almacenarlo en el state
         guardarProductos(todosProductos);
+        actualizarTotal();
     };
 
 
@@ -136,14 +144,16 @@ function NuevoPedido(props) {
 
         // colocarlo en el state
         guardarProductos(todosProductos);
+        actualizarTotal();
     };
 
 
     // Elimina un producto del state
     const eliminarProductoPedido = id => {
         // retorna los productos diferentes a ese id
-        const todosProductos = productos.filter(producto => producto._id !== id);
+        const todosProductos = productos.filter(producto => producto.producto !== id);
         guardarProductos(todosProductos);
+        actualizarTotal();
     }
 
 
@@ -170,21 +180,21 @@ function NuevoPedido(props) {
 
 
     // Almacena el pedido en la base de datos
-    const realizarPedido = async e => {
+    const EditarElPedido = async e => {
         e.preventDefault();
 
         // extraer el ID
-        const { id } = props.match.params;
+        const { idPedido } = props.match.params;
 
         // construir el objeto
         const pedido = {
-            "cliente": id,
+            "cliente": cliente._id,
             "pedido": productos,
             "total": total
         }
 
        // Almacenar en la BD
-       const resultado = await clienteAxios.post(`pedidos/nuevo/${id}`,pedido,{
+       const resultado = await clienteAxios.put(`pedidos/${idPedido}`,pedido,{
            headers: {
                Authorization: `Barer ${auth.token}`
            }
@@ -214,7 +224,7 @@ function NuevoPedido(props) {
 
     return (
         <Fragment>
-            <h2>Nuevo Pedido</h2>
+            <h2>Editar Pedido</h2>
 
             <div className="ficha-cliente">
                 <h3>Datos de Cliente</h3>
@@ -251,12 +261,12 @@ function NuevoPedido(props) {
 
             {total > 0 ? (
                 <form
-                    onSubmit={realizarPedido}
+                    onSubmit={EditarElPedido}
                 >
                     <input
                         type="submit"
                         className="btn btn-verde btn-block"
-                        value="Realizar Pedido"
+                        value="Actualizar Pedido"
                     />
                 </form>
             ) : null}
@@ -264,4 +274,4 @@ function NuevoPedido(props) {
     );
 }
 
-export default withRouter(NuevoPedido);
+export default withRouter(EditarPedido);

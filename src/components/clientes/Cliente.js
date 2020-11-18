@@ -35,11 +35,22 @@ function Cliente({cliente}) {
                     }
                 })
                     .then(res => {
-                        Swal.fire(
-                            'Eliminado!',
-                            res.data.mensaje,
-                            'success'
-                          );
+                        if (res.status === 200) {
+                            if (res.data.type === 'success') {
+                                 Swal.fire(
+                                     'Eliminado!',
+                                     res.data.mensaje,
+                                     'success'
+                                 );
+                            }
+                            if(res.data.type === 'warning'){
+                             Swal.fire({
+                                 icon: 'warning',
+                                 title: 'No se puede realizar esta operacón',
+                                 text:  res.data.mensaje,
+                              });
+                             }
+                         } 
                     });
 
                     

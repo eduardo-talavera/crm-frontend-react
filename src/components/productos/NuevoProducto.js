@@ -85,6 +85,11 @@ function NuevoProducto(props) {
         guardarArchivo(e.target.files[0] );
     }
 
+     // si el state esta como false
+     if (!auth.auth) {
+        props.history.push('/iniciar-sesion');
+    }
+
     
 
     return(

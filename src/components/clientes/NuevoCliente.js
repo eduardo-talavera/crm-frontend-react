@@ -67,6 +67,13 @@ function  NuevoCliente({history}) {
             });
     }
 
+    const isPhoneNumber = (phone) => { 
+ 
+        const regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/; 
+        if(phone.match(regex)) return true; 
+        else return false; 
+    }
+
 
     // Validar el formulario
     const validarCliente = () => {
@@ -78,7 +85,8 @@ function  NuevoCliente({history}) {
                      !apellido.length ||
                      !email.length ||
                      !empresa.length ||
-                     !telefono.length;
+                     !telefono.length ||
+                     !isPhoneNumber(telefono);
 
         // retorna true o false
         return valido;
@@ -86,9 +94,7 @@ function  NuevoCliente({history}) {
 
     // verificar si el usuario esta autenticado o no
 
-    if(!auth.auth && (localStorage.getItem('token') === auth.token)) {
-        history.push('/iniciar-sesion');
-    }
+    if(!auth.auth) history.push('/iniciar-sesion');
 
     return (
        <Fragment>
@@ -143,10 +149,10 @@ function  NuevoCliente({history}) {
                 <div className="campo">
                     <label>Teléfono:</label>
                     <input type="tel"
-                           placeholder="Teléfono Cliente" 
-                           name="telefono"
-                           onChange={actualizarState}
-                           />
+                        placeholder="Teléfono Cliente" 
+                        name="telefono"
+                        onChange={actualizarState}
+                    />
                 </div>
 
                 <div className="enviar">

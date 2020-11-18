@@ -24,7 +24,7 @@ const Header = (props) => {
         <header className="barra">
             <div className="contenedor">
                 <div className="contenido-barra">
-                    <h1>CRM - Administrador de Clientes</h1>
+                    <h1>CRM - Administrador de clientes</h1>
 
                     { auth.auth ? (
                          <button 
@@ -33,7 +33,7 @@ const Header = (props) => {
                             onClick={cerrarSesion}
                             >
                          <i className="far fa-times-circle"></i>
-                            Cerrar Sesion
+                            Cerrar sesión
                         </button>
                     ) : null }
                 </div>  
