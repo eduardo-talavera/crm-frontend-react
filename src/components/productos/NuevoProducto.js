@@ -121,9 +121,9 @@ function NuevoProducto(props) {
                             />
                 </div>
 
-                <div className="campo">
+                {/* <div className="campo">
                     <p>Nota: procure que la imagen no exeda los 256px de ancho</p>
-                </div>
+                </div> */}
 
                 <div className="campo">
                    
