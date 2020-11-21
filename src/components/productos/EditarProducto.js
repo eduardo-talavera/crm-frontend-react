@@ -12,6 +12,7 @@ function EditarProducto(props) {
 
     // obtener ID del producto
     const { id } = props.match.params;
+    const [previousImage, setPreviousImage] = useState("")
 
     const [producto, guardarProducto] = useState({
         nombre: '',
@@ -37,6 +38,7 @@ function EditarProducto(props) {
          formData.append('nombre', producto.nombre);
          formData.append('precio', producto.precio);
          formData.append('imagen', archivo);
+         formData.append('previousImage', previousImage);
  
          
  
@@ -88,6 +90,7 @@ function EditarProducto(props) {
                         }
                     });
                     guardarProducto(productoConsulta.data);
+                    setPreviousImage(productoConsulta.data.imagen);
                 }
 
                 consultarAPI();
