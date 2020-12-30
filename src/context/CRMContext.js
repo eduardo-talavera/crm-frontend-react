@@ -14,6 +14,18 @@ const CRMProvider = props => {
         auth: false
     });
 
+    // if (typeof window !== 'undefined') {
+    //     const tokenLs = localStorage.getItem('token');
+    //     console.log('token => ', tokenLs);
+
+    //     //colocarlo en el state
+    //     guardarAuth({
+    //        token: tokenLs,
+    //        auth: true
+    //     })
+
+    //  }
+
     return (
         <CRMContext.Provider value={[auth, guardarAuth]}>
             {props.children}

@@ -9,15 +9,11 @@ const Navegacion = () => {
     if(!auth.auth) return null;
 
     return ( 
-        <aside className="sidebar col-3">
-            <h2>Administración</h2>
-
-            <nav className="navegacion">
-                <Link to={"/"} className="clientes">Clientes</Link>
-                <Link to={"/productos"} className="productos">Productos</Link>
-                <Link to={"/pedidos"} className="pedidos">Pedidos</Link>
-            </nav>
-        </aside>
+        <nav className="navegacion">
+            <Link to={"/clientes"} className="clientes text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Clientes</Link>
+            <Link to={"/productos"} className="productos text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Productos</Link>
+            <Link to={"/pedidos"} className="pedidos text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Pedidos</Link>
+        </nav>
  );
 }
  

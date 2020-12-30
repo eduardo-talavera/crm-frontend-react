@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect,useContext, useState} from 'react';
-
+import Layout from "../layout/Layout";
 // Importar cliente axios
 import clienteAxios from '../../config/axios';
 
@@ -62,38 +62,38 @@ function Productos(props) {
     }
 
     // Spinner de carga
-    if(!productos.length) return (
-        <Fragment>
-            <h2>Productos</h2>
-            <Link to={"/productos/nuevo"} className="btn btn-verde nvo-cliente"> <i className="fas fa-plus-circle"></i>
-                Nuevo Producto
-            </Link>
-            {/* Spinner de carga */}
-            <Spinner />
-        </Fragment>
-    );
+    // if(!productos.length) return (
+    //     <Fragment>
+    //         <h2>Productos</h2>
+    //         <Link to={"/productos/nuevo"} className="btn btn-verde nvo-cliente"> <i className="fas fa-plus-circle"></i>
+    //             Nuevo Producto
+    //         </Link>
+    //         {/* Spinner de carga */}
+    //         <Spinner />
+    //     </Fragment>
+    // );
         
   
 
 
 
     return(
-        <Fragment>
-            <h2>Productos</h2>
-
-            <Link to={"/productos/nuevo"} className="btn btn-verde nvo-cliente"> <i className="fas fa-plus-circle"></i>
-                Nuevo Producto
+        <Layout title="Productos">
+            <Link to={"/productos/nuevo"} className="relative py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"> <i className="fas fa-plus-circle"></i>
+               &nbsp; Nuevo Producto
             </Link>
 
-            <ul className="listado-productos">
+            {!productos.length ? (<Spinner/>) : null}
+
+            <div className="md:grid grid-cols-3 gap-4 mt-10">
                 {productos.map(producto => (
                     <Producto
                         key={producto._id}
                         producto={producto}
                     />
                 ))}
-            </ul>
-        </Fragment>
+            </div>
+        </Layout>
     );
 }
 

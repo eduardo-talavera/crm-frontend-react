@@ -1,173 +1,171 @@
-import React, {Fragment,useState, useContext} from 'react';
-import Swal from 'sweetalert2';
-import {withRouter} from 'react-router-dom';
-import clienteAxios from '../../config/axios';
-// importar el context
-import { CRMContext } from '../../context/CRMContext';
+import React from "react";
+import Layout from "../layout/Layout";
 
+function NuevoCliente() {
+  return (
+    <Layout title="Nuevo Cliente">
+      <div className="mt-10 sm:mt-0">
+        <div className="md:grid md:grid-cols-3 md:gap-6">
+          <div className="md:col-span-1">
+            <div className="px-4 sm:px-0">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Personal Information
+              </h3>
+              <p className="mt-1 text-sm text-gray-600">
+                Use a permanent address where you can receive mail.
+              </p>
+            </div>
+          </div>
+          <div className="mt-5 md:mt-0 md:col-span-2">
+            <form>
+              <div className="shadow overflow-hidden sm:rounded-md">
+                <div className="px-4 py-5 bg-white sm:p-6">
+                  <div className="grid grid-cols-6 gap-6">
+                    <div className="col-span-6 sm:col-span-3">
+                      <label
+                        for="first_name"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        First name
+                      </label>
+                      <input
+                        type="text"
+                        name="first_name"
+                        id="first_name"
+                        autocomplete="given-name"
+                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
 
-function  NuevoCliente({history}) {
+                    <div className="col-span-6 sm:col-span-3">
+                      <label
+                        for="last_name"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Last name
+                      </label>
+                      <input
+                        type="text"
+                        name="last_name"
+                        id="last_name"
+                        autocomplete="family-name"
+                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
 
-     // utilizar valores del context
-     const [auth, guardarAuth] = useContext(CRMContext);
+                    <div className="col-span-6 sm:col-span-4">
+                      <label
+                        for="email_address"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Email address
+                      </label>
+                      <input
+                        type="text"
+                        name="email_address"
+                        id="email_address"
+                        autocomplete="email"
+                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
 
-    // cliente = state
-    // guardarCliente = funcion para guardar el state 
-    const [cliente, guardarCliente] = useState({
-        nombre: '',
-        apellido: '',
-        empresa: '',
-        email: '',
-        telefono: '',
-    });
+                    <div className="col-span-6 sm:col-span-3">
+                      <label
+                        for="country"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Country / Region
+                      </label>
+                      <select
+                        id="country"
+                        name="country"
+                        autocomplete="country"
+                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      >
+                        <option>United States</option>
+                        <option>Canada</option>
+                        <option>Mexico</option>
+                      </select>
+                    </div>
 
-    // leer los datos del formulario
-    const actualizarState = e => {
-        // Almacenar lo que el usuario escribe en el state
-        guardarCliente({
-            // Obtener una copia del state actual para que no elimine los valores previos
-            ...cliente,
-            [e.target.name] : e.target.value
-        })
-    }
+                    <div className="col-span-6">
+                      <label
+                        for="street_address"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Street address
+                      </label>
+                      <input
+                        type="text"
+                        name="street_address"
+                        id="street_address"
+                        autocomplete="street-address"
+                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
 
-    // Añade en la rest API un Cliente nuevo
-    const agregarCliente = e => {
-        e.preventDefault();
+                    <div className="col-span-6 sm:col-span-6 lg:col-span-2">
+                      <label
+                        for="city"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        City
+                      </label>
+                      <input
+                        type="text"
+                        name="city"
+                        id="city"
+                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
 
-        // enviar peticion a axios
-        clienteAxios.post('/clientes', cliente,{
-            headers:{
-                Authorization: `Barer ${auth.token}`
-            }
-        })
-            .then(res => {
-                // Validar si hay errores de mongo
-                if (res.data.code === 11000) {
+                    <div className="col-span-6 sm:col-span-3 lg:col-span-2">
+                      <label
+                        for="state"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        State / Province
+                      </label>
+                      <input
+                        type="text"
+                        name="state"
+                        id="state"
+                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
 
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Hubo un error',
-                        text: 'Ese correo ya existe'
-                    })
-
-                } else {
-                    console.log(res.data);
-
-                    Swal.fire(
-                        'Se agrego el cliente',
-                        res.data.mensaje,
-                        'success'
-                    )
-                }
-
-
-                // redireccionar
-                history.push('/');
-            });
-    }
-
-    const isPhoneNumber = (phone) => { 
- 
-        const regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/; 
-        if(phone.match(regex)) return true; 
-        else return false; 
-    }
-
-
-    // Validar el formulario
-    const validarCliente = () => {
-        //Destructuring
-        const {nombre, apellido, email, empresa, telefono} = cliente;
-
-        // revisar que las propiedades del objeto tengan contenido
-        let valido = !nombre.length ||
-                     !apellido.length ||
-                     !email.length ||
-                     !empresa.length ||
-                     !telefono.length ||
-                     !isPhoneNumber(telefono);
-
-        // retorna true o false
-        return valido;
-    }
-
-    // verificar si el usuario esta autenticado o no
-
-    if(!auth.auth) history.push('/iniciar-sesion');
-
-    return (
-       <Fragment>
-           
-            <h2>nuevo cliente</h2>
-
-            <form
-                onSubmit={agregarCliente}
-            >
-                <legend> Llena todos los campos </legend>
-
-                <div className="campo">
-                    <label>Nombre:</label>
-                    <input type="text" 
-                           placeholder="Nombre Cliente" 
-                           name="nombre"
-                           onChange={actualizarState}
-                           />
-
+                    <div className="col-span-6 sm:col-span-3 lg:col-span-2">
+                      <label
+                        for="postal_code"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        ZIP / Postal
+                      </label>
+                      <input
+                        type="text"
+                        name="postal_code"
+                        id="postal_code"
+                        autocomplete="postal-code"
+                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+                  </div>
                 </div>
-
-                <div className="campo">
-                    <label>Apellido:</label>
-                    <input type="text"
-                           placeholder="Apellido Cliente" 
-                           name="apellido"
-                           onChange={actualizarState}
-                           />
-
+                <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                  <button
+                    type="submit"
+                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Save
+                  </button>
                 </div>
-            
-                <div className="campo">
-                    <label>Empresa:</label>
-                    <input type="text"
-                           placeholder="Empresa Cliente" 
-                           name="empresa"
-                           onChange={actualizarState}
-                           />
-
-                </div>
-
-                <div className="campo">
-                    <label>Email:</label>
-                    <input type="email"
-                           placeholder="Email Cliente" 
-                           name="email"
-                           onChange={actualizarState}
-                            />
-
-                </div>
-
-                <div className="campo">
-                    <label>Teléfono:</label>
-                    <input type="tel"
-                        placeholder="Teléfono Cliente" 
-                        name="telefono"
-                        onChange={actualizarState}
-                    />
-                </div>
-
-                <div className="enviar">
-                        <input type="submit" 
-                               className="btn btn-azul" 
-                               value="Agregar Cliente"
-                               disabled={ validarCliente() }
-                               />
-                </div>
-
+              </div>
             </form>
-
-       </Fragment>
-    );    
+          </div>
+        </div>
+      </div>
+    </Layout>
+  );
 }
 
-// HOC, es una funcion que toma un componente y retorna un nuevo componente
-export default withRouter( NuevoCliente );
+export default NuevoCliente;

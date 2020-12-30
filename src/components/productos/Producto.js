@@ -58,30 +58,30 @@ function Producto({producto}) {
     const {_id, nombre, precio, imagen} = producto;
 
     return(
-        <li className="producto">
+        <div className="mt-10">
             <div className="info-producto">
-            <p className="nombre">{nombre}</p>
-            <CurrencyFormat value={precio} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={value => <p className="precio">{value}</p>} />
+            <p className="text-xl">{nombre}</p>
+            <CurrencyFormat value={precio} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={value => <p className="text-xl text-indigo-600">{value}</p>} />
                 {/* <p className="precio">{precio}</p> */}
                 {imagen ? (
                     <div className="item__image_product"><img src={`${process.env.REACT_APP_BACKEND_URL}/${imagen}`} alt="imagen" /></div>
                 ) : null }
             </div>
             <div className="acciones">
-                <Link to={`/productos/editar/${_id}`} className="btn btn-azul">
+                <Link to={`/productos/editar/${_id}`} className="relative py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                     <i className="fas fa-pen-alt"></i>
-                    Editar Producto
+                   &nbsp; Editar Producto
                 </Link>
 
                 <button type="button"
-                        className="btn btn-rojo btn-eliminar"
+                        className="relative md:ml-3 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                         onClick={() => eliminarProducto(_id)}
                     >
                     <i className="fas fa-times"></i>
-                    Eliminar Producto
+                   &nbsp; Eliminar Producto
                 </button>
             </div>
-        </li>
+        </div>
     );
 }
 

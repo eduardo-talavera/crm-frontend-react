@@ -2,6 +2,7 @@ import React, {useEffect, useState, useContext, Fragment} from 'react';
 import clienteAxios from '../../config/axios';
 import DetallesPedido from './DetallesPedido';
 import Spinner from '../layout/Spinner';
+import Layout from "../layout/Layout";
 // importar el context
 import { CRMContext } from '../../context/CRMContext';
 import {withRouter} from 'react-router-dom';
@@ -47,16 +48,11 @@ function Pedidos(props) {
      if (!auth.auth) {
         props.history.push('/iniciar-sesion');
     }
-
-
-    // Spinner de carga
-    if(!pedidos.length) return <Spinner />
         
 
     return(
-       <Fragment>
-           <h2>Pedidos</h2>
-
+       <Layout title="Pedidos">
+           {!pedidos.length ? (<Spinner />) : null}
             <ul className="listado-pedidos">
                 {pedidos.map(pedido => (
                     <DetallesPedido
@@ -65,7 +61,7 @@ function Pedidos(props) {
                     />
                 ))}
             </ul>
-       </Fragment>
+       </Layout>
     );
 }
 
